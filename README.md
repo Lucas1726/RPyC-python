@@ -1,59 +1,77 @@
-Para testar o script Python chamado server.py e client.py, você pode seguir estas etapas gerais:
+# RPC Python - Cálculo de IMC, Equação Quadrática e Palíndromo
 
-1° - Certifique-se de ter o Python instalado: Você pode fazer isso executando python --version ou python3 --version no seu terminal. Se o Python não estiver instalado, você precisará instalá-lo primeiro. (https://www.python.org/downloads/)
+## Sobre o Projeto
+Este projeto consiste em uma aplicação cliente-servidor utilizando **RPC (Remote Procedure Call)** com a biblioteca **rpyc**. O servidor disponibiliza três funcionalidades principais:
 
-![image](https://github.com/Lucas1726/RPyC-python/assets/92900328/39cab9a9-735c-4ae8-8571-4b9ef4c9af5e)
+1. **Cálculo do IMC (Indice de Massa Corporal)**
+2. **Resolução de uma Equação Quadrática**
+3. **Verificação se uma palavra é um Palíndromo**
 
-2° Você pode criar um ambiente virtual para manter essas dependências isoladas do seu sistema global (é uma prática recomendada). Siga estas etapas:
+O cliente se conecta ao servidor e solicita a execução desses métodos remotamente.
 
-- Linux/Mac: (source venv/bin/activate)
-- Windows (PowerShell): (venv\Scripts\Activate.ps1)
+---
 
-![image](https://github.com/Lucas1726/RPyC-python/assets/92900328/9468e949-e6ef-4510-9da9-2d4fe1b5b8b8)
+## Tecnologias Utilizadas
+- **Python**
+- **Biblioteca rpyc**
 
-3° - Instale os pacotes necessário:
+---
 
-- pip install requests
+## Como Executar o Projeto
+### 1. Instalar Dependências
+Antes de executar o projeto, certifique-se de ter o **Python** instalado e a biblioteca **rpyc** instalada. Caso não tenha o `rpyc`, instale com:
 
-![image](https://github.com/Lucas1726/RPyC-python/assets/92900328/05cf26ca-6e2c-4eb5-a3f7-02c6a0ff601c)
+```sh
+pip install rpyc
+```
 
-- pip install rpyc
+### 2. Iniciar o Servidor
+Execute o seguinte comando no terminal para iniciar o servidor:
 
-![image](https://github.com/Lucas1726/RPyC-python/assets/92900328/5a034785-f20c-4dfb-9ad0-44b67343ba91)
+```sh
+python server.py
+```
 
-4° - Verifique onde está localizado os scipts server.py e client.py. De preferência deixe nesta pasta C:\Users\nome_do_computador
-- "C:" é a letra que representa a unidade principal do disco rígido do computador, onde a maior parte dos arquivos do sistema e programas está armazenada.
-- "Users" é a pasta que contém os perfis de todos os usuários do computador.
-- "nome_do_computador" é o nome de usuário específico, e dentro desta pasta estão localizados os documentos, imagens, músicas e outros arquivos pessoais pertencentes ao usuário "nome_do_computador".
+Se tudo estiver correto, a seguinte mensagem será exibida:
+```
+Servidor online
+```
 
-5° - Execute o servidor usando o seguinte comando:
-- python server.py
+### 3. Executar o Cliente
+Abra outro terminal e execute o cliente para interagir com o servidor:
 
-![image](https://github.com/Lucas1726/RPyC-python/assets/92900328/a4e8fdaa-27f0-4cf3-bb82-ee1fe77f6916)
+```sh
+python cliente.py
+```
 
-6° - Em um programa diferente de onde está sendo executado o servidor. Execute o cliente usando o seguinte comando para ativar o client.py:
-- python client.py
+O cliente solicitará entradas do usuário para cada uma das três funcionalidades:
+- Digitar peso e altura para calcular o IMC.
+- Digitar os coeficientes `a`, `b` e `c` para resolver uma equação quadrática.
+- Digitar uma palavra para verificar se é um palíndromo.
 
-![image](https://github.com/Lucas1726/RPyC-python/assets/92900328/0bee8733-05be-42c8-b40c-07592bc767f9)
+---
 
-OBS: É necessário ativar o ambiente virtual na outra aba do programa novamente, NÃO é necessário fazer a importação dos pacotes, apenas ativar o ambiente virtual.
+## Estrutura do Código
 
-Agora que o cliente está em execução, ele se conectará automaticamente ao servidor e fará chamadas RPC para os métodos disponíveis no servidor. No seu caso, o cliente faz três chamadas RPC para os métodos exposed_imc, exposed_equacao, e exposed_palindromo.
+### `server.py`
+O servidor define três métodos expostos via RPC:
+- `exposed_imc(peso, altura)`: Calcula o IMC e retorna a classificação correspondente.
+- `exposed_equacao(a, b, c)`: Resolve uma equação quadrática e retorna as raízes.
+- `exposed_palindromo(palavra)`: Verifica se uma palavra é um palíndromo.
 
-- Para calcular o IMC (Índice de Massa Corporal), o cliente envia os valores de peso e altura para o servidor, que retorna o resultado do cálculo do IMC e a mensagem de classificação.
-- Para calcular uma equação do segundo grau, o cliente envia os coeficientes a, b e c para o servidor, que retorna as raízes da equação (se houver).
-- Para verificar se uma palavra é um palíndromo, o cliente envia a palavra para o servidor, que verifica se ela é um palíndromo e retorna uma mensagem correspondente.
+O servidor é iniciado na porta `18812` e escuta requisições do cliente.
 
-7 - Visualizar os Resultados
+### `cliente.py`
+O cliente se conecta ao servidor na porta `18812` e interage com o usuário para coletar entradas, chamando os métodos remotos expostos pelo servidor.
 
-Os resultados das chamadas RPC feitas pelo cliente serão impressos no terminal onde o cliente está em execução. Você verá a saída do servidor para cada uma das chamadas.
+---
 
-![image](https://github.com/Lucas1726/RPyC-python/assets/92900328/39d1b689-c7d5-417c-9be0-5aad6bd90ce8)
+## Autor
+**Lucas Gonçalves Prado das Neves**  
+Série: 06 | Turma: A | Turno: NOTURNO
 
-8 - Encerrar a Execução
+---
 
-Depois de obter os resultados ou quando você não precisar mais dos serviços, você pode simplesmente fechar o terminal do cliente para encerrar a execução do cliente. O servidor continuará em execução até que você o encerre manualmente no terminal do servidor pressionando Ctrl+C.
+## Licença
+Este projeto é de uso educacional e pode ser modificado e distribuído livremente.
 
-Lembre-se de que é importante manter o servidor em execução enquanto você estiver usando o cliente, caso contrário, o cliente não conseguirá se conectar ao servidor.
-
-Espero ter ajudado!
